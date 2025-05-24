@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="headerDiv">Welcome to the Library!</h1>
+    <h2 id="currentBooksDiv">Current Books</h2>
+    <div id="bookInfo"></div>
+    <div id="newBookButtonDiv">
+        <button id="newBookButton">Add New Book</button>
+    </div>
+    <dialog id="newBookDialog">
+        <form action="" method="get" class="formDiv">
+            <div id="bookTitleDiv">
+                <label for="BookTitle">Enter Book Title</label>
+                <input type="text" name="BookTitle" id="BookTitle" placeholder="Book Title" required>
+            </div>
+            <div id="bookAuthorDiv">
+                <label for="BookAuthor">Enter Book Author</label>
+                <input type="text" name="BookAuthor" id="BookAuthor" placeholder="Book Author" required>
+            </div>
+            <div id="submitNewBookButtonDiv">
+                <input type="submit" value="Add Book" id="submitNewBook">
+            </div>
+        </form>
+        <button id="closeNewBookDialogButton">Close</button>
+    </dialog>
+
+    <script src="main.js"></script>
+</body>
+</html>
