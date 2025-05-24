@@ -9,7 +9,8 @@
 <body>
     <h1 id="headerDiv">Welcome to the Library!</h1>
     <h2 id="currentBooksDiv">Current Books</h2>
-    <div id="bookInfo"></div>
+    <div id="bookInfo">
+    </div>
     <div id="newBookButtonDiv">
         <button id="newBookButton">Add New Book</button>
     </div>
@@ -23,11 +24,11 @@
                 <label for="BookAuthor">Enter Book Author</label>
                 <input type="text" name="BookAuthor" id="BookAuthor" placeholder="Book Author" required>
             </div>
-            <div id="submitNewBookButtonDiv">
-                <input type="submit" value="Add Book" id="submitNewBook">
-            </div>
         </form>
-        <button id="closeNewBookDialogButton">Close</button>
+        <div class="form-button-container">
+            <input type="submit" value="Add Book" id="submitNewBook">
+            <button class="form-button-container" id="closeNewBookDialogButton">Close</button>
+        </div>
     </dialog>
 
     <script src="main.js"></script>

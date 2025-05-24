@@ -1,19 +1,21 @@
 const myLibrary = [];
 
 // Book function to create a new book
-function Book(bookID, bookTitle, bookAuthor){
+function Book(bookID, bookTitle, bookAuthor, bookRead){
     this.bookID = bookID;
     this.bookTitle = bookTitle;
     this.bookAuthor = bookAuthor;
+    this.bookRead = bookRead;
 }
-
+Book.prototype.toggleRead = function() {
+    this.bookRead = !this.bookRead;
+}
 
 // Add Book to Library array function
 function AddBookToLibrary(bookTitle, bookAuthor){
-    this.bookTitle = bookTitle;
-    this.bookAuthor = bookAuthor;
-    bookID = crypto.randomUUID();
-    const book = new Book(bookID, this.bookTitle, this.bookAuthor);
+    const bookID = crypto.randomUUID();
+    const bookRead = false;
+    const book = new Book(bookID, bookTitle, bookAuthor, bookRead);
     myLibrary.push(book);
 }
 
@@ -22,11 +24,78 @@ function DisplayBooks(){
     bookInfoDiv.innerHTML = '';
 
     for (let i = 0; i < myLibrary.length; i++){
-        const createBookInfo = document.createElement('div');
-        createBookInfo.textContent = (myLibrary[i].bookTitle + " by " + myLibrary[i].bookAuthor + " | " + "Book ID: " + myLibrary[i].bookID);
-        bookInfoDiv.appendChild(createBookInfo);
+        const createBookInfoDiv = document.createElement('div');
+        bookInfoDiv.appendChild(createBookInfoDiv);
+
+        createBookInfoDiv.classList.add("createBookInfoDiv");
+
+        // Title
+        const createBookInfoTitle = document.createElement('div');
+        createBookInfoTitle.textContent = ("Title: " + myLibrary[i].bookTitle);
+        createBookInfoDiv.appendChild(createBookInfoTitle);
+
+        // Author
+        const createBookInfoAuthor = document.createElement('div');
+        createBookInfoAuthor.textContent = ("Author: " + myLibrary[i].bookAuthor);
+        createBookInfoDiv.appendChild(createBookInfoAuthor);
+
+        // ID
+        const createBookInfoID = document.createElement('div');
+        createBookInfoID.textContent = ("Book ID: " + myLibrary[i].bookID);
+        createBookInfoDiv.appendChild(createBookInfoID);
+
+        // Status div
+        const bookStatusDiv = document.createElement('div');
+        bookStatusDiv.classList.add("bookStatus");
+        if (myLibrary[i].bookRead){
+            bookStatusDiv.textContent = "Read";
+            bookStatusDiv.classList.remove('notRead');
+            bookStatusDiv.classList.add('read');
+            }
+        else {
+                bookStatusDiv.textContent = "Not read";
+                bookStatusDiv.classList.remove('read');
+                bookStatusDiv.classList.add('notRead');
+            }
+        createBookInfoDiv.appendChild(bookStatusDiv);
+
+        // Delete Button
+        const deleteBookButton = document.createElement('button');
+        deleteBookButton.classList.add("deleteBookButton");
+        deleteBookButton.id = i;
+        deleteBookButton.textContent = "Delete Book";
+        createBookInfoDiv.appendChild(deleteBookButton);
+
+        deleteBookButton.addEventListener('click', function deleteBookFromLibrary(){
+            myLibrary.splice(i, 1);
+            DisplayBooks();
+        });
+
+
+        // Mark as Read Button        
+        const markAsReadButton = document.createElement('button');
+        markAsReadButton.classList.add("markAsReadButton");
+        markAsReadButton.id = `readButton-${i}`;
+        markAsReadButton.textContent = "Toggle Read";
+        createBookInfoDiv.appendChild(markAsReadButton);
+
+        // Toggle Read Status
+        markAsReadButton.addEventListener('click', function (){
+            myLibrary[i].toggleRead();
+            if (myLibrary[i].bookRead){
+                bookStatusDiv.textContent = "Read";
+                bookStatusDiv.classList.remove('notRead');
+                bookStatusDiv.classList.add('read');
+                }
+            else {
+                    bookStatusDiv.textContent = "Not read";
+                    bookStatusDiv.classList.remove('read');
+                    bookStatusDiv.classList.add('notRead');
+            }
+        });
     }
 }
+
 
 // Fetch parent div that will contain newly created book objects
 const bookInfoDiv = document.getElementById('bookInfo');
@@ -54,6 +123,7 @@ function CloseNewBookDialog(){
     newBookDialog.close();
 }
 
+// Submit New Book Button
 const newBookSubmitButton = document.getElementById('submitNewBook');
 
 newBookSubmitButton.addEventListener('click', AddBookToLibraryFromDialog)
@@ -67,6 +137,11 @@ function AddBookToLibraryFromDialog(event){
     DisplayBooks();
 }
 
+
 AddBookToLibrary("To Kill A Mockingbird", "Harper Lee");
 AddBookToLibrary("The Great Gatsby", "F. Scott Fitzgerald");
+
+for (let i = 0; i < 7; i++){
+    AddBookToLibrary(`Book ${i}`, `Author ${i}`);
+}
 DisplayBooks();
